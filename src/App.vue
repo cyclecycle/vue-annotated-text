@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <AnnotatedSentence
-      sentence="Forging is performed by a smith using hammer and anvil."
+    <AnnotatedText
+      text="Forging is performed by a smith using hammer and anvil."
       v-bind:annotations="annotations"
       v-bind:getAnnotationColor="getAnnotationColor"
       v-bind:getAnnotationInfo="getAnnotationInfo"
@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import AnnotatedSentence from './components/AnnotatedSentence.vue'
+import AnnotatedText from './components/AnnotatedText.vue'
 import annotations from './data/annotations.js'
 
 export default {
   name: 'app',
   components: {
-    AnnotatedSentence
+    AnnotatedText
   },
   data() {
     return {

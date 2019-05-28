@@ -12,7 +12,7 @@
 import c_c from 'color-mixer'
 
 export default {
-  name: 'ComposedSentence',
+  name: 'ComposedText',
   props: {
     spans: Array,
     annotations: Array,

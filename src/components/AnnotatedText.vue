@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ComposedSentence
+    <ComposedText
       v-bind:spans="spans"
       v-bind:annotations="annotations"
       v-bind:getAnnotationColor="getAnnotationColor"
@@ -10,23 +10,23 @@
 </template>
 
 <script>
-import ComposedSentence from './ComposedSentence'
+import ComposedText from './ComposedText'
 import { buildSpanList } from '../util/buildSpanList'
 
 export default {
-  name: 'AnnotatedSentence',
+  name: 'AnnotatedText',
   components: {
-    ComposedSentence
+    ComposedText
   },
   props: {
-    sentence: String,
+    text: String,
     annotations: Array,
     getAnnotationColor: Function,
     getAnnotationInfo: Function,
   },
   computed: {
     spans: function() {
-      const spans = buildSpanList(this.sentence, this.annotations)
+      const spans = buildSpanList(this.text, this.annotations)
       return spans
     },
   }
