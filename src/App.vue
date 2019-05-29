@@ -4,6 +4,8 @@
       :text="text"
       :annotations="annotations"
       :spanEvents="spanEvents"
+      :spanClasses="spanClasses"
+      :getAnnotationColor="getAnnotationColor"
     />
   </div>
 </template>
@@ -39,9 +41,6 @@ export default {
       const color = classToColor[annotation.class]
       return color
     },
-    getAnnotationInfo: function(annotation) {
-      return 'Annotation info'
-    }
   }
 }
 </script>

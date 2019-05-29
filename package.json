@@ -1,6 +1,6 @@
 {
   "name": "vue-annotated-text",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./dist/annotated-text.common.js",
   "files": [
     "dist/*",

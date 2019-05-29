@@ -2534,19 +2534,12 @@ var web_dom_iterable = __webpack_require__("ac6a");
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6245cf80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AnnotatedText.vue?vue&type=template&id=12efb211&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('ComposedText',{attrs:{"spans":_vm.spans,"annotations":_vm.annotations,"getAnnotationColor":_vm.getAnnotationColor,"getAnnotationInfo":_vm.getAnnotationInfo}})],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6245cf80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AnnotatedText.vue?vue&type=template&id=223830af&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._l((_vm.spans),function(span){return _c('span',_vm._g(_vm._b({key:span.id,class:_vm.spanClasses,style:(_vm.getSpanStyle(span)),attrs:{"data-span-id":span.id}},'span',_vm.spanAttributes,false),_vm.spanEvents),[_vm._v(_vm._s(span.text))])}),0)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/AnnotatedText.vue?vue&type=template&id=12efb211&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6245cf80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ComposedText.vue?vue&type=template&id=60f49e1e&
-var ComposedTextvue_type_template_id_60f49e1e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._l((_vm.spans),function(span){return _c('span',{key:span.id,style:(_vm.getSpanStyle(span))},[_vm._v(_vm._s(span.text))])}),0)}
-var ComposedTextvue_type_template_id_60f49e1e_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/ComposedText.vue?vue&type=template&id=60f49e1e&
+// CONCATENATED MODULE: ./src/components/AnnotatedText.vue?vue&type=template&id=223830af&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es7.array.includes.js
 var es7_array_includes = __webpack_require__("6762");
@@ -2558,7 +2551,52 @@ var es6_string_includes = __webpack_require__("2fdb");
 var colormixer = __webpack_require__("e2da");
 var colormixer_default = /*#__PURE__*/__webpack_require__.n(colormixer);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ComposedText.vue?vue&type=script&lang=js&
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.string.iterator.js
+var es6_string_iterator = __webpack_require__("5df3");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.from.js
+var es6_array_from = __webpack_require__("1c4c");
+
+// CONCATENATED MODULE: ./src/util/buildSpanList.js
+
+
+
+var flatten = __webpack_require__("bec7");
+
+var buildSpanList = function buildSpanList(text, annotations) {
+  // Prepare range list to send to flatten-overlapping-spans.flatten()
+  var ranges = [];
+  var fullRange = ["baseText", 0, text.length];
+  ranges.push(fullRange);
+  var annotationRanges = annotations.map(function (annotation) {
+    return [annotation.id, annotation.start, annotation.length];
+  });
+  ranges = ranges.concat(annotationRanges); // Flatten
+
+  var sections = Array.from(flatten(ranges)); // Each section becomes a span
+
+  var sectionTextStart = 0;
+  var spanId = 0;
+  var spans = sections.map(function (section) {
+    var length = section[0];
+    var annotations = section[1];
+    var start = sectionTextStart;
+    var end = sectionTextStart + length;
+    var sectionText = text.slice(start, end);
+    var span = {
+      id: spanId,
+      start: start,
+      length: length,
+      text: sectionText,
+      annotation_ids: annotations
+    };
+    spanId = spanId + 1;
+    sectionTextStart = end;
+    return span;
+  });
+  return spans;
+};
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AnnotatedText.vue?vue&type=script&lang=js&
 
 
 //
@@ -2571,18 +2609,49 @@ var colormixer_default = /*#__PURE__*/__webpack_require__.n(colormixer);
 //
 //
 //
+//
+//
+//
+//
 
-/* harmony default export */ var ComposedTextvue_type_script_lang_js_ = ({
-  name: 'ComposedText',
+
+/* harmony default export */ var AnnotatedTextvue_type_script_lang_js_ = ({
+  name: 'AnnotatedText',
   props: {
-    spans: Array,
+    text: String,
     annotations: Array,
-    getAnnotationColor: Function,
-    getAnnotationInfo: Function
+    getAnnotationColor: {
+      type: Function,
+      default: function _default(annotation) {
+        return '#ffffff';
+      }
+    },
+    getAnnotationInfo: Function,
+    spanEvents: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    },
+    spanClasses: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    spanAttributes: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    }
   },
-  // mounted() {
-  //   console.log(this.spans)
-  // },
+  computed: {
+    spans: function spans() {
+      var spans = buildSpanList(this.text, this.annotations);
+      return spans;
+    }
+  },
   methods: {
     getSpanAnnotations: function getSpanAnnotations(span) {
       var annotations = this.annotations.filter(function (annotation) {
@@ -2619,14 +2688,11 @@ var colormixer_default = /*#__PURE__*/__webpack_require__.n(colormixer);
       }
 
       return color;
-    } // getSpanInfo: function(span) {
-    //   return 'Span info'
-    // },
-
+    }
   }
 });
-// CONCATENATED MODULE: ./src/components/ComposedText.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_ComposedTextvue_type_script_lang_js_ = (ComposedTextvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/AnnotatedText.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_AnnotatedTextvue_type_script_lang_js_ = (AnnotatedTextvue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
 
@@ -2722,105 +2788,6 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./src/components/ComposedText.vue
-
-
-
-
-
-/* normalize component */
-
-var component = normalizeComponent(
-  components_ComposedTextvue_type_script_lang_js_,
-  ComposedTextvue_type_template_id_60f49e1e_render,
-  ComposedTextvue_type_template_id_60f49e1e_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var ComposedText = (component.exports);
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.string.iterator.js
-var es6_string_iterator = __webpack_require__("5df3");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.from.js
-var es6_array_from = __webpack_require__("1c4c");
-
-// CONCATENATED MODULE: ./src/util/buildSpanList.js
-
-
-
-var flatten = __webpack_require__("bec7");
-
-var buildSpanList = function buildSpanList(text, annotations) {
-  // Prepare range list to send to flatten-overlapping-spans.flatten()
-  var ranges = [];
-  var fullRange = ["baseText", 0, text.length];
-  ranges.push(fullRange);
-  var annotationRanges = annotations.map(function (annotation) {
-    return [annotation.id, annotation.start, annotation.length];
-  });
-  ranges = ranges.concat(annotationRanges); // Flatten
-
-  var sections = Array.from(flatten(ranges)); // Each section becomes a span
-
-  var sectionTextStart = 0;
-  var spanId = 0;
-  var spans = sections.map(function (section) {
-    var length = section[0];
-    var annotations = section[1];
-    var start = sectionTextStart;
-    var end = sectionTextStart + length;
-    var sectionText = text.slice(start, end);
-    var span = {
-      id: spanId,
-      start: start,
-      length: length,
-      text: sectionText,
-      annotation_ids: annotations
-    };
-    spanId = spanId + 1;
-    sectionTextStart = end;
-    return span;
-  });
-  return spans;
-};
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AnnotatedText.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ var AnnotatedTextvue_type_script_lang_js_ = ({
-  name: 'AnnotatedText',
-  components: {
-    ComposedText: ComposedText
-  },
-  props: {
-    text: String,
-    annotations: Array,
-    getAnnotationColor: Function,
-    getAnnotationInfo: Function
-  },
-  computed: {
-    spans: function spans() {
-      var spans = buildSpanList(this.text, this.annotations);
-      return spans;
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/components/AnnotatedText.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_AnnotatedTextvue_type_script_lang_js_ = (AnnotatedTextvue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./src/components/AnnotatedText.vue
 
 
@@ -2829,7 +2796,7 @@ var buildSpanList = function buildSpanList(text, annotations) {
 
 /* normalize component */
 
-var AnnotatedText_component = normalizeComponent(
+var component = normalizeComponent(
   components_AnnotatedTextvue_type_script_lang_js_,
   render,
   staticRenderFns,
@@ -2840,7 +2807,7 @@ var AnnotatedText_component = normalizeComponent(
   
 )
 
-/* harmony default export */ var AnnotatedText = (AnnotatedText_component.exports);
+/* harmony default export */ var AnnotatedText = (component.exports);
 // CONCATENATED MODULE: ./src/components/index.js
 
 
@@ -2848,10 +2815,8 @@ var AnnotatedText_component = normalizeComponent(
 
 
 
-
 var Components = {
-  AnnotatedText: AnnotatedText,
-  ComposedText: ComposedText
+  AnnotatedText: AnnotatedText
 };
 Object.keys(Components).forEach(function (name) {
   external_commonjs_vue_commonjs2_vue_root_Vue_default.a.component(name, Components[name]);
