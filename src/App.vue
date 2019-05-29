@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <AnnotatedText
-      text="Forging is performed by a smith using hammer and anvil."
-      v-bind:annotations="annotations"
-      v-bind:getAnnotationColor="getAnnotationColor"
-      v-bind:getAnnotationInfo="getAnnotationInfo"
+      :text="text"
+      :annotations="annotations"
+      :spanEvents="spanEvents"
     />
   </div>
 </template>
@@ -20,7 +19,15 @@ export default {
   },
   data() {
     return {
-      annotations: annotations
+      text: "Forging is performed by a smith using hammer and anvil.",
+      annotations: annotations,
+      spanEvents: {
+        'click': function(e) {
+          console.log(e.target.attributes['data-span-id'].value)
+        }
+      },
+      spanClasses: ['custom-span-class'],
+      spanAttributes: {},
     }
   },
   methods: {
@@ -47,5 +54,8 @@ export default {
   text-align: left;
   color: #2c3e50;
   margin-top: 60px;
+}
+.custom-span-class:hover {
+  outline: 1px solid black;
 }
 </style>
