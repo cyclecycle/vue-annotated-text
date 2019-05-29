@@ -2525,12 +2525,12 @@ var web_dom_iterable = __webpack_require__("ac6a");
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6245cf80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AnnotatedText.vue?vue&type=template&id=223830af&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._l((_vm.spans),function(span){return _c('span',_vm._g(_vm._b({key:span.id,class:_vm.spanClasses,style:(_vm.getSpanStyle(span)),attrs:{"data-span-id":span.id}},'span',_vm.spanAttributes,false),_vm.spanEvents),[_vm._v(_vm._s(span.text))])}),0)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6245cf80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AnnotatedText.vue?vue&type=template&id=882831d6&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._l((_vm.spans),function(span){return _c('span',_vm._g(_vm._b({key:span.id,class:_vm.spanClasses,style:(_vm.getSpanStyle(span)),attrs:{"data-span-id":span.id,"data-annotation-ids":span.annotationIds}},'span',_vm.spanAttributes,false),_vm.spanEvents),[_vm._v(_vm._s(span.text))])}),0)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/AnnotatedText.vue?vue&type=template&id=223830af&
+// CONCATENATED MODULE: ./src/components/AnnotatedText.vue?vue&type=template&id=882831d6&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es7.array.includes.js
 var es7_array_includes = __webpack_require__("6762");
@@ -2570,7 +2570,10 @@ var buildSpanList = function buildSpanList(text, annotations) {
   var spanId = 0;
   var spans = sections.map(function (section) {
     var length = section[0];
-    var annotations = section[1];
+    var annotationIds = section[1];
+    annotationIds = annotationIds.filter(function (annotationId) {
+      return annotationId !== 'baseText';
+    });
     var start = sectionTextStart;
     var end = sectionTextStart + length;
     var sectionText = text.slice(start, end);
@@ -2579,7 +2582,7 @@ var buildSpanList = function buildSpanList(text, annotations) {
       start: start,
       length: length,
       text: sectionText,
-      annotation_ids: annotations
+      annotationIds: annotationIds
     };
     spanId = spanId + 1;
     sectionTextStart = end;
@@ -2590,6 +2593,7 @@ var buildSpanList = function buildSpanList(text, annotations) {
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AnnotatedText.vue?vue&type=script&lang=js&
 
 
+//
 //
 //
 //
@@ -2646,7 +2650,7 @@ var buildSpanList = function buildSpanList(text, annotations) {
   methods: {
     getSpanAnnotations: function getSpanAnnotations(span) {
       var annotations = this.annotations.filter(function (annotation) {
-        return span.annotation_ids.includes(annotation.id);
+        return span.annotationIds.includes(annotation.id);
       });
       return annotations;
     },
