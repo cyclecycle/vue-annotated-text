@@ -49,40 +49,45 @@ export default {
   },
   data() {
     return {
-        text: "Forging is performed by a smith using hammer and anvil.",
-        annotations: [
-          {
-            start: 0,
-            length: 7,
-            id: "forging",
-            class: "process"
-          },
-          {
-            start: 26,
-            length: 18,
-            id: "smith_using_hammer",
-            class: "process"
-          },
-          {
-            start: 38,
-            length: 6,
-            id: "hammer",
-            class: "tool"
-          },
-          {
-            start: 49,
-            length: 5,
-            id: "anvil",
-            class: "tool"
-          }
-        ],
-        spanEvents: {
-            'click': function(event) {
-                const spanId = event.target.attributes['data-span-id'].value
-                console.log('Span id:', spanId) 
-            },
+      text: "Forging is performed by a smith using hammer and anvil.",
+      annotations: [
+        {
+          start: 0,
+          length: 7,
+          id: "forging",
+          class: "process"
         },
-        spanClasses: ['my-span-class'],
+        {
+          start: 26,
+          length: 18,
+          id: "smith_using_hammer",
+          class: "process"
+        },
+        {
+          start: 38,
+          length: 6,
+          id: "hammer",
+          class: "tool"
+        },
+        {
+          start: 49,
+          length: 5,
+          id: "anvil",
+          class: "tool"
+        }
+      ],
+      spanEvents: {
+        'click': function(e) {
+          let annotationIds = e.target.attributes['data-annotation-ids'].value
+          if (annotationIds !== '') {
+            annotationIds = annotationIds.split(',')
+          } else {
+            annotationIds = []
+          }
+          console.log(annotationIds)
+        },
+      },
+      spanClasses: ['my-span-class'],
     }
   },
   methods: {

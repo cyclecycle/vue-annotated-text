@@ -3,6 +3,7 @@
     <span
       v-for="span in spans"
       :data-span-id="span.id"
+      :data-annotation-ids="span.annotationIds"
       :key="span.id"
       :style="getSpanStyle(span)"
       v-on="spanEvents"
@@ -50,7 +51,7 @@ export default {
   methods: {
     getSpanAnnotations(span) {
       const annotations = this.annotations.filter(annotation => {
-        return span.annotation_ids.includes(annotation.id)
+        return span.annotationIds.includes(annotation.id)
       })
       return annotations
     },

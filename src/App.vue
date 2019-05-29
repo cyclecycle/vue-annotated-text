@@ -25,7 +25,13 @@ export default {
       annotations: annotations,
       spanEvents: {
         'click': function(e) {
-          console.log(e.target.attributes['data-span-id'].value)
+          let annotationIds = e.target.attributes['data-annotation-ids'].value
+          if (annotationIds !== '') {
+            annotationIds = annotationIds.split(',')
+          } else {
+            annotationIds = []
+          }
+          console.log(annotationIds)
         }
       },
       spanClasses: ['custom-span-class'],

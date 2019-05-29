@@ -16,7 +16,10 @@ export const buildSpanList = (text, annotations) => {
   let spanId = 0;
   const spans = sections.map(section => {
     const length = section[0];
-    const annotations = section[1];
+    let annotationIds = section[1];
+    annotationIds = annotationIds.filter(annotationId => {
+      return annotationId !== 'baseText'
+    })
     const start = sectionTextStart;
     const end = sectionTextStart + length;
     const sectionText = text.slice(start, end);
@@ -25,7 +28,7 @@ export const buildSpanList = (text, annotations) => {
       start: start,
       length: length,
       text: sectionText,
-      annotation_ids: annotations
+      annotationIds: annotationIds
     };
     spanId = spanId + 1;
     sectionTextStart = end;
