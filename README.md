@@ -28,7 +28,7 @@ yarn add vue-annotated-text
 <template>
     <div>
         <AnnotatedText
-            :text="text" <!-- The text to be annotated -->
+            :text="text"  <!-- The text to be annotated -->
             :annotations="annotations"  <!-- The array of annotations -->
             :getAnnotationColor="getAnnotationColor"  <!-- Function called to get color value to signal the annotation -->
             :spanClasses="spanClasses"  <!-- CSS classes to apply to the rendered <span> elements -->
