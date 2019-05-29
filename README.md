@@ -1,31 +1,44 @@
-# vue-annotated-sentence
+# vue-annotated-text
+
+![Example output](https://github.com/cyclecycle/vue-annotated-text/blob/master/example_output.png)
+
+## Features
+
+- Renders the text as a set of spans representing the segments composing the sentence
+- These can be associated with custom styles or events
+- Overlapping annotations are represented by mixed colors
 
 ## Installation
 
+With npm:
+
 ```bash
-// With npm
 npm install vue-annotated-text
-// or yarn
+```
+
+With yarn:
+
+```bash
 yarn add vue-annotated-text
 ```
 
 ## Example usage
 
-```javascript
-
+```html
 <template>
     <div>
         <AnnotatedText
-            :text="text"  // The plain text
+            :text="text"  // The text to be annotated
             :annotations="annotations"  // The array of annotations
-            :getAnnotationColor="getAnnotationColor"
-            :spanClasses="spanClasses"  // Classes to apply to the rendered <span> elements
-            :spanEvents="spanEvents"  // Event listeners for the <span> elements
+            :getAnnotationColor="getAnnotationColor"  // Function called to get color value to signal the annotation
+            :spanClasses="spanClasses"  // CSS classes to apply to the rendered <span> elements
+            :spanEvents="spanEvents"  // Event listeners to apply to the <span> elements
             :spanAttributes="spanAttributes"  // Any HTML attributes to apply to the <span> elements
         />
     </div>
 </template>
-
+```
+```js
 <script>
 import AnnotatedText from 'vue-annotated-text'
 
@@ -64,20 +77,28 @@ export default {
           }
         ],
         spanEvents: {
-            'click': function(event) { console.log('Span id:', event.target.attributes['data-span-id'].value) },
+            'click': function(event) {
+                const spanId = event.target.attributes['data-span-id'].value
+                console.log('Span id:', spanId) 
+            },
         },
         spanClasses: ['my-span-class'],
     }
   },
   methods: {
-    getAnnotationColor: Function,
-
+    getAnnotationColor: function(annotation) {  // Must return hex value
+      const classToColor = {
+        'process': '#f44283',
+        'tool': '#41acf4',
+      }
+      const color = classToColor[annotation.class]
+      return color
+    },
   }
-  props: {
-  },
 }
 </script>
-
+```
+```css
 <style>
 .my-span-class:hover {
     outline: 1px solid black;
@@ -89,4 +110,8 @@ export default {
 
 Built with:
 
-- flatten-overlapping-ranges
+- [flatten-overlapping-ranges](https://github.com/derhuerst/flatten-overlapping-ranges)
+
+## TODO
+
+- Add default info box onHover
