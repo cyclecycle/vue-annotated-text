@@ -5,7 +5,7 @@
 ## Features
 
 - Renders the text as a set of spans representing the segments composing the sentence
-- These can be associated with custom styles or events
+- These spans can be associated with custom styles or events
 - Overlapping annotations are represented by mixed colors
 
 ## Installation
@@ -28,12 +28,12 @@ yarn add vue-annotated-text
 <template>
     <div>
         <AnnotatedText
-            :text="text"  // The text to be annotated
-            :annotations="annotations"  // The array of annotations
-            :getAnnotationColor="getAnnotationColor"  // Function called to get color value to signal the annotation
-            :spanClasses="spanClasses"  // CSS classes to apply to the rendered <span> elements
-            :spanEvents="spanEvents"  // Event listeners to apply to the <span> elements
-            :spanAttributes="spanAttributes"  // Any HTML attributes to apply to the <span> elements
+            :text="text" <!-- The text to be annotated -->
+            :annotations="annotations"  <!-- The array of annotations -->
+            :getAnnotationColor="getAnnotationColor"  <!-- Function called to get color value to signal the annotation -->
+            :spanClasses="spanClasses"  <!-- CSS classes to apply to the rendered <span> elements -->
+            :spanEvents="spanEvents"  <!-- Event listeners to apply to the <span> elements -->
+            :spanAttributes="spanAttributes"  <!-- Any HTML attributes to apply to the <span> elements -->
         />
     </div>
 </template>
@@ -86,13 +86,13 @@ export default {
     }
   },
   methods: {
-    getAnnotationColor: function(annotation) {  // Must return hex value
+    getAnnotationColor: function(annotation) {
       const classToColor = {
         'process': '#f44283',
         'tool': '#41acf4',
       }
       const color = classToColor[annotation.class]
-      return color
+      return color  // Must return hex value
     },
   }
 }
