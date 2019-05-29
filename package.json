@@ -1,12 +1,17 @@
 {
-  "name": "vue-annotated-sentence",
+  "name": "vue-annotated-text",
   "version": "0.1.0",
-  "private": true,
+  "main": "./dist/annotated-text.common.js",
+  "files": [
+    "dist/*",
+    "util/*"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "build-bundle": "vue-cli-service build --target lib --name annotated-text ./src/components/index.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",

@@ -2,8 +2,12 @@
   <div>
     <span
       v-for="span in spans"
+      v-bind:data-span-id="span.id"
       v-bind:key="span.id"
       v-bind:style="getSpanStyle(span)"
+      v-on="spanEvents"
+      v-bind:class="spanClasses"
+      v-bind="spanAttributes"
     >{{ span.text }}</span>
   </div>
 </template>
@@ -19,10 +23,24 @@ export default {
     getAnnotationColor: Function,
     getAnnotationInfo: Function,
   },
+  data() {
+    return {
+      spanEvents: {
+        'click': function(e) {
+          console.log(e.target.attributes['data-span-id'].value)
+        }
+      },
+      spanClasses: ['custom-span-class'],
+      spanAttributes: {}
+    }
+  },
   // mounted() {
   //   console.log(this.spans)
   // },
   methods: {
+    clicked() {
+      console.log('clicked')
+    },
     getSpanAnnotations(span) {
       const annotations = this.annotations.filter(annotation => {
         return span.annotation_ids.includes(annotation.id)
@@ -55,3 +73,10 @@ export default {
   }
 }
 </script>
+
+
+<style>
+.custom-span-class:hover {
+  outline: 1px solid black;
+}
+</style>
