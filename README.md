@@ -108,7 +108,7 @@ export default {
 
 ## Acknowledgements
 
-Built with:
+Uses:
 
 - [flatten-overlapping-ranges](https://github.com/derhuerst/flatten-overlapping-ranges)
 
