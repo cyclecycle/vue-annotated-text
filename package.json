@@ -17,7 +17,8 @@
     "core-js": "^2.6.5",
     "flatten-overlapping-ranges": "^1.0.0",
     "thenby": "^1.3.0",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "color-mixer": "kosamari/color-mixer"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

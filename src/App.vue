@@ -4,7 +4,7 @@
       :text="text"
       :annotations="annotations"
       :spanEvents="spanEvents"
-      :spanClasses="spanClasses"
+      :getSpanClasses="getSpanClasses"
       :getAnnotationColor="getAnnotationColor"
     />
   </div>
@@ -24,17 +24,10 @@ export default {
       text: "Forging is performed by a smith using hammer and anvil.",
       annotations: annotations,
       spanEvents: {
-        'click': function(e) {
-          let annotationIds = e.target.attributes['data-annotation-ids'].value
-          if (annotationIds !== '') {
-            annotationIds = annotationIds.split(',')
-          } else {
-            annotationIds = []
-          }
-          console.log(annotationIds)
-        }
+        'click': function(e, annotations) {  // All event callbacks take arguments: (event, annotations)
+          console.log(annotations)
+        },
       },
-      spanClasses: ['custom-span-class'],
       spanAttributes: {},
     }
   },
@@ -46,6 +39,14 @@ export default {
       }
       const color = classToColor[annotation.class]
       return color
+    },
+    getSpanClasses: function(span) {
+      const classes = ['my-span-class']
+      const annotationIds = span.annotationIds
+      if (annotationIds.length > 0) {
+        classes.push('annotated')
+      }
+      return classes
     },
   }
 }
@@ -60,7 +61,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.custom-span-class:hover {
+.my-span-class:hover {
   outline: 1px solid black;
+}
+.annotated {
+  font-weight: bold;
 }
 </style>

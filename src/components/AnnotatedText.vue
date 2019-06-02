@@ -2,13 +2,13 @@
   <div>
     <span
       v-for="span in spans"
+      :key="span.id"
       :data-span-id="span.id"
       :data-annotation-ids="span.annotationIds"
-      :key="span.id"
+      :class="getSpanClasses(span)"
       :style="getSpanStyle(span)"
-      v-on="spanEvents"
-      :class="spanClasses"
       v-bind="spanAttributes"
+      v-on="preppedSpanEvents"
     >{{ span.text }}</span>
   </div>
 </template>
@@ -21,7 +21,12 @@ export default {
   name: 'AnnotatedText',
   props: {
     text: String,
-    annotations: Array,
+    annotations: {
+      type: Array,
+      default: function() {
+        return []
+      },
+    },
     getAnnotationColor: {
       type: Function,
       default: function(annotation) {
@@ -33,9 +38,9 @@ export default {
       type: Object,
       default: function() { return {} }
     },
-    spanClasses: {
-      type: Array,
-      default: function() { return [] }
+    getSpanClasses: {
+      type: Function,
+      default: function() { return () => {} }
     },
     spanAttributes: {
       type: Object,
@@ -47,11 +52,35 @@ export default {
       const spans = buildSpanList(this.text, this.annotations)
       return spans
     },
+    preppedSpanEvents() {
+      // Get annotations and pass to the event callback
+      const spanEvents = this.spanEvents
+      const preppedSpanEvents = {}
+      Object.keys(spanEvents).forEach(eventType => {
+        const callback = spanEvents[eventType]
+        const newCallback = (e) => {
+          const annotationIds = this.annotationIdsFromElement(e.target)
+          const annotations = this.getAnnotations(annotationIds)
+          callback(e, annotations)
+        }
+        preppedSpanEvents[eventType] = newCallback
+      })
+      return preppedSpanEvents
+    },
   },
   methods: {
-    getSpanAnnotations(span) {
+    annotationIdsFromElement(el) {
+      let annotationIds = el.attributes['data-annotation-ids'].value
+      if (annotationIds !== '') {
+        annotationIds = annotationIds.split(',')
+      } else {
+        annotationIds = []
+      }
+      return annotationIds
+    },
+    getAnnotations(annotationIds) {
       const annotations = this.annotations.filter(annotation => {
-        return span.annotationIds.includes(annotation.id)
+        return annotationIds.includes(annotation.id)
       })
       return annotations
     },
@@ -62,7 +91,8 @@ export default {
     },
     getSpanColor: function(span) {
       let color = null
-      const annotations = this.getSpanAnnotations(span)
+      const annotationIds = span.annotationIds
+      const annotations = this.getAnnotations(annotationIds)
       let colors = annotations.map(annotation => this.getAnnotationColor(annotation))
       if (colors.length > 1) {
         colors = colors.map(color => {

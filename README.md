@@ -31,7 +31,7 @@ yarn add vue-annotated-text
             :text="text"  <!-- The text to be annotated -->
             :annotations="annotations"  <!-- The array of annotations -->
             :getAnnotationColor="getAnnotationColor"  <!-- Function called to get color value to signal the annotation -->
-            :spanClasses="spanClasses"  <!-- CSS classes to apply to the rendered <span> elements -->
+            :getSpanClasses="getSpanClasses"  <!-- function returning CSS classes to apply to the rendered <span> element -->
             :spanEvents="spanEvents"  <!-- Event listeners to apply to the <span> elements -->
             :spanAttributes="spanAttributes"  <!-- Any HTML attributes to apply to the <span> elements -->
         />
@@ -51,43 +51,36 @@ export default {
     return {
       text: "Forging is performed by a smith using hammer and anvil.",
       annotations: [
-        {
+        {  // All annotations must have a unique 'id', and values for 'start' and 'length'
+          id: "forging",
           start: 0,
           length: 7,
-          id: "forging",
           class: "process"
         },
         {
+          id: "smith_using_hammer",
           start: 26,
           length: 18,
-          id: "smith_using_hammer",
           class: "process"
         },
         {
+          id: "hammer",
           start: 38,
           length: 6,
-          id: "hammer",
           class: "tool"
         },
         {
+          id: "anvil",
           start: 49,
           length: 5,
-          id: "anvil",
           class: "tool"
         }
       ],
       spanEvents: {
-        'click': function(e) {
-          let annotationIds = e.target.attributes['data-annotation-ids'].value
-          if (annotationIds !== '') {
-            annotationIds = annotationIds.split(',')
-          } else {
-            annotationIds = []
-          }
-          console.log(annotationIds)
+        'click': function(e, annotations) {  // All event callbacks take arguments: (event, annotations)
+          console.log(annotations)
         },
       },
-      spanClasses: ['my-span-class'],
     }
   },
   methods: {
@@ -99,6 +92,14 @@ export default {
       const color = classToColor[annotation.class]
       return color  // Must return hex value
     },
+    getSpanClasses: function(span) {
+      const classes = ['my-span-class']
+      const annotationIds = span.annotationIds
+      if (annotationIds.length > 0) {
+        classes.push('annotated')
+      }
+      return classes
+    }
   }
 }
 </script>
@@ -106,7 +107,10 @@ export default {
 ```css
 <style>
 .my-span-class:hover {
-    outline: 1px solid black;
+  outline: 1px solid black;
+}
+.annotated {
+  font-weight: bold;  
 }
 </style>
 ```
@@ -116,7 +120,8 @@ export default {
 Uses:
 
 - [flatten-overlapping-ranges](https://github.com/derhuerst/flatten-overlapping-ranges)
+- [color-mixer](https://github.com/kosamari/color-mixer)
 
 ## TODO
 
-- Add default info box onHover
+- Add default info box on hover
