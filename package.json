@@ -11,7 +11,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test": "jest",
-    "build-bundle": "vue-cli-service build --target lib --name annotated-text ./src/components/index.js"
+    "build-bundle": "vue-cli-service build --target lib --name annotated-text ./src/components/index.js",
+    "publish": "npm publish --access public",
+    "deploy": "npm run build-bundle; npm run publish"
   },
   "dependencies": {
     "core-js": "^2.6.5",

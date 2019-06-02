@@ -2,7 +2,7 @@ export default [
   {
     start: 0,
     length: 7,
-    id: "forging",
+    id: 1,
     class: "process"
   },
   {

@@ -59,7 +59,9 @@ export default {
       Object.keys(spanEvents).forEach(eventType => {
         const callback = spanEvents[eventType]
         const newCallback = (e) => {
-          const annotationIds = this.annotationIdsFromElement(e.target)
+          const spanId = this.elementSpanId(e.target)
+          const span = this.spanById(spanId)
+          const annotationIds = span.annotationIds
           const annotations = this.getAnnotations(annotationIds)
           callback(e, annotations)
         }
@@ -69,14 +71,17 @@ export default {
     },
   },
   methods: {
-    annotationIdsFromElement(el) {
-      let annotationIds = el.attributes['data-annotation-ids'].value
-      if (annotationIds !== '') {
-        annotationIds = annotationIds.split(',')
-      } else {
-        annotationIds = []
-      }
-      return annotationIds
+    elementSpanId(el) {
+      let spanId = el.attributes['data-span-id'].value
+      spanId = Number(spanId)
+      return spanId
+    },
+    spanById(spanId) {
+      const spans = this.spans.filter(span => {
+        return span.id === spanId
+      })
+      const span = spans[0]
+      return span
     },
     getAnnotations(annotationIds) {
       const annotations = this.annotations.filter(annotation => {
