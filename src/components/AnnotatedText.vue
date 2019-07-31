@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <span
       v-for="span in spans"
       :key="span.id"
@@ -10,7 +10,7 @@
       v-bind="spanAttributes"
       v-on="preppedSpanEvents"
     >{{ span.text }}</span>
-  </div>
+  </span>
 </template>
 
 <script>
@@ -99,6 +99,7 @@ export default {
       const annotationIds = span.annotationIds
       const annotations = this.getAnnotations(annotationIds)
       let colors = annotations.map(annotation => this.getAnnotationColor(annotation))
+      colors = [...new Set(colors)]
       if (colors.length > 1) {
         colors = colors.map(color => {
           return new c_c.Color({hex: color})

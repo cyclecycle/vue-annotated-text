@@ -11,45 +11,46 @@
 </template>
 
 <script>
-import AnnotatedText from './components/AnnotatedText.vue'
-import annotations from './data/annotations.js'
+import AnnotatedText from './components/AnnotatedText.vue';
+import annotations from './data/annotations.js';
 
 export default {
   name: 'app',
   components: {
-    AnnotatedText
+    AnnotatedText,
   },
   data() {
     return {
-      text: "Forging is performed by a smith using hammer and anvil.",
+      text: 'Forging is performed by a smith using hammer and anvil.',
       annotations: annotations,
       spanEvents: {
-        'click': function(e, annotations) {  // All event callbacks take arguments: (event, annotations)
-          console.log(annotations)
+        click: function(e, annotations) {
+          // All event callbacks take arguments: (event, annotations)
+          console.log(annotations);
         },
       },
       spanAttributes: {},
-    }
+    };
   },
   methods: {
     getAnnotationColor: function(annotation) {
       const classToColor = {
-        'process': '#f44283',
-        'tool': '#41acf4',
-      }
-      const color = classToColor[annotation.class]
-      return color
+        process: '#f44283',
+        tool: '#41acf4',
+      };
+      const color = classToColor[annotation.class];
+      return color;
     },
     getSpanClasses: function(span) {
-      const classes = ['my-span-class']
-      const annotationIds = span.annotationIds
+      const classes = ['my-span-class'];
+      const annotationIds = span.annotationIds;
       if (annotationIds.length > 0) {
-        classes.push('annotated')
+        classes.push('annotated');
       }
-      return classes
+      return classes;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

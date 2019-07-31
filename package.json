@@ -1,6 +1,6 @@
 {
   "name": "vue-annotated-text",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "main": "./dist/annotated-text.common.js",
   "files": [
     "dist/*",
@@ -12,8 +12,7 @@
     "lint": "vue-cli-service lint",
     "test": "jest",
     "build-bundle": "vue-cli-service build --target lib --name annotated-text ./src/components/index.js",
-    "publish": "npm publish --access public",
-    "deploy": "npm run build-bundle; npm run publish"
+    "publish": "npm publish --access public"
   },
   "dependencies": {
     "core-js": "^2.6.5",
